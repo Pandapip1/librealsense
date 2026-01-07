@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 macro(info msg)
   message(STATUS "Info: ${msg}")
@@ -60,8 +60,9 @@ infoValue(REALSENSE_VERSION_STRING)
 
 # In a ROS Build Environment CMAKE_PREFIX_PATH is also an environment variable
 # Checking for this special case and ensuring it contains a ROS path
-if(DEFINED ENV{CMAKE_PREFIX_PATH} AND $ENV{CMAKE_PREFIX_PATH} MATCHES "/opt/ros")
-    set(ROS_BUILD_TYPE TRUE)
+set(ROS_BUILD_TYPE FALSE CACHE BOOL "Build librealsense for ROS")
+if($ENV{CMAKE_PREFIX_PATH} AND $ENV{CMAKE_PREFIX_PATH} MATCHES "/opt/ros" )
+  set(ROS_BUILD_TYPE TRUE CACHE BOOL "Build librealsense for ROS")
 endif()
 
 if(ROS_BUILD_TYPE)
